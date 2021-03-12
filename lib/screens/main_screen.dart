@@ -14,8 +14,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   String _fullname = '';
-  String _id_type = '';
-  String _id_number = '';
+  String _idType = '';
+  String _idNumber = '';
   String _position = '';
   String _bloodType = '';
   String _timestamp = '';
@@ -38,8 +38,8 @@ class _MainScreenState extends State<MainScreen> {
       var splittedString = barCodeScanRes.split('>>');
       setState(() {
         _fullname = splittedString[0];
-        _id_type = splittedString[1];
-        _id_number = splittedString[2];
+        _idType = splittedString[1];
+        _idNumber = splittedString[2];
         _bloodType = splittedString[3];
         _position = splittedString[4];
         _timestamp = DateTime.now().toIso8601String();
@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
               'Identificación',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text('$_id_type $_id_number'),
+            Text('$_idType $_idNumber'),
             Text(
               'Cargo',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(_timestamp),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () => scanQR(),
               child: Text('Scan'),
             )

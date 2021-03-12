@@ -35,7 +35,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         child: Column(
           children: [
             Text(_barcode),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Start scan'),
               onPressed: _scan,
             )

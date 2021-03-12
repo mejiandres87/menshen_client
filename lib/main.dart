@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menshen_client/screens/main_screen.dart';
 import 'package:menshen_client/screens/scanner_screen.dart';
 
 void main() {
