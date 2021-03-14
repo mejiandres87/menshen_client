@@ -29,7 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_barcode_scanner: ^1.0.2
   qrscan: ^0.2.22
-  barcode_scanner: ^1.1.0
+  http: ^0.13.0
 
 dev_dependencies:
   flutter_test:

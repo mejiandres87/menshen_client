@@ -1,5 +1,5 @@
 class Location {
-  final int id;
+  final String id;
   final String name;
   final String description;
 
@@ -21,7 +21,7 @@ class Location {
       };
 
   Location copyWith({
-    int id,
+    String id,
     String name,
     String description,
   }) {

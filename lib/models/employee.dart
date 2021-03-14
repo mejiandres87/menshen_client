@@ -1,11 +1,11 @@
 class Employee {
-  final int id;
+  final String id;
   final String fullname;
   final String idType;
   final String idNumber;
   final String bloodType;
   final String position;
-  final int currentLocation;
+  final String currentLocation;
 
   const Employee(
       {this.id,
@@ -36,7 +36,7 @@ class Employee {
       };
 
   Employee copyWith(
-      {int id,
+      {String id,
       String fullname,
       String bloodType,
       int currentLocation,

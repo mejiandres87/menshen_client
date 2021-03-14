@@ -1,26 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:menshen_client/models/location.dart';
 
 class ScannerScreen extends StatefulWidget {
-  ScannerScreen({Key key, this.title}) : super(key: key);
+  ScannerScreen({Key key, this.location}) : super(key: key);
 
-  final String title;
+  final Location location;
 
   @override
   _ScannerScreenState createState() => _ScannerScreenState();
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-  String _barcode = '';
+  String _fullname = '';
+  String _idType = '';
+  String _idNumber = '';
+  String _position = '';
+  String _bloodType = '';
+  String _timestamp = '';
 
-  Future _scan() async {
-    String barcode = await scanner.scan();
-    if (barcode == null) {
-      print('nothing');
-    } else {
+  Future<void> scanQR() async {
+    String barCodeScanRes;
+
+    try {
+      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.BARCODE);
+
+      print(barCodeScanRes);
+    } on PlatformException {
+      barCodeScanRes = 'Failed to get platform version';
+    }
+
+    if (!mounted) return;
+
+    if (barCodeScanRes.contains('>>')) {
+      var splittedString = barCodeScanRes.split('>>');
       setState(() {
-        _barcode = barcode;
+        _fullname = splittedString[0];
+        _idType = splittedString[1];
+        _idNumber = splittedString[2];
+        _bloodType = splittedString[3];
+        _position = splittedString[4];
+        _timestamp = DateTime.now().toIso8601String();
       });
     }
   }
@@ -29,15 +52,40 @@ class _ScannerScreenState extends State<ScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.location.name),
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(_barcode),
+            Text(
+              'Nombre completo',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(_fullname),
+            Text(
+              'Identificación',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text('$_idType $_idNumber'),
+            Text(
+              'Cargo',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(_position),
+            Text(
+              'Grupo Sanguíneo',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(_bloodType),
+            Text(
+              'Fecha de registro',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(_timestamp),
             ElevatedButton(
-              child: Text('Start scan'),
-              onPressed: _scan,
+              onPressed: () => scanQR(),
+              child: Text('Scan'),
             )
           ],
         ),
