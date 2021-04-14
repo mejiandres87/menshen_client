@@ -1,24 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menshen_client/models/employee.dart';
+import 'package:menshen_client/screens/employee_screen.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class EmployeeCard extends StatelessWidget {
   final Employee employee;
 
   EmployeeCard({@required this.employee});
 
+  void _navigateToEmployeescreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => EmployeeScreen(employee),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text(employee.fullname),
-            subtitle: Text('${employee.idType} - ${employee.idNumber}'),
-          )
-        ],
+    return InkWell(
+      onTap: () => _navigateToEmployeescreen(context),
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text(employee.fullname),
+              subtitle: Text('${employee.idType} - ${employee.idNumber}'),
+            )
+          ],
+        ),
       ),
     );
   }

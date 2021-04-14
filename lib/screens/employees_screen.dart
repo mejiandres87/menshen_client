@@ -29,7 +29,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         'menshen-firebase-default-rtdb.firebaseio.com', 'employees.json');
     var response = await http.get(url);
     var parsedEmployees = json.decode(response.body) as Map<String, dynamic>;
-    print(parsedEmployees);
     parsedEmployees.forEach((key, value) {
       var e = Employee.fromJson(value);
       e = e.copyWith(id: key);

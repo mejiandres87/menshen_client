@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:menshen_client/models/employee.dart';
-import 'package:menshen_client/models/location.dart';
 import 'package:menshen_client/screens/employees_screen.dart';
 import 'package:menshen_client/screens/locations_screen.dart';
-import 'package:menshen_client/screens/scanner_screen.dart';
-import 'package:http/http.dart' as http;
+import 'package:menshen_client/widgets/menu_item.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -43,18 +39,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
             children: [
-              ElevatedButton(
-                onPressed: () => _goToEmployees(context),
-                child: const Text('Empleados'),
-              ),
-              ElevatedButton(
-                onPressed: () => _goToLocations(context),
-                child: const Text('Salas'),
-              ),
+              MenuItem(
+                  navigateHandler: () => _goToEmployees(context),
+                  icon: Icons.person,
+                  title: 'Empleados'),
+              MenuItem(
+                  navigateHandler: () => _goToLocations(context),
+                  icon: Icons.meeting_room,
+                  title: 'Salas')
             ],
           ),
         ),

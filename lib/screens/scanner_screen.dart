@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:menshen_client/models/location.dart';
+import 'package:menshen_client/models/registry.dart';
+import 'package:http/http.dart' as http;
 
 class ScannerScreen extends StatefulWidget {
   ScannerScreen({Key key, this.location}) : super(key: key);
@@ -14,6 +17,7 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
+  String _id = '';
   String _fullname = '';
   String _idType = '';
   String _idNumber = '';
@@ -43,8 +47,17 @@ class _ScannerScreenState extends State<ScannerScreen> {
         _idNumber = splittedString[2];
         _bloodType = splittedString[3];
         _position = splittedString[4];
+        _id = splittedString[5];
         _timestamp = DateTime.now().toIso8601String();
       });
+      var registry = Registry(
+        employee: _id,
+        location: widget.location.id,
+        inTime: DateTime.now(),
+      );
+      var url = Uri.https(
+          'menshen-firebase-default-rtdb.firebaseio.com', 'registries.json');
+      http.post(url, body: json.encode(registry));
     }
   }
 
