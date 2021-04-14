@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:menshen_client/models/employee.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'edit_employee_screen.dart';
+
 class EmployeeScreen extends StatelessWidget {
   final Employee employee;
 
   EmployeeScreen(this.employee);
+
+  void _goToEditEmployee(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => EditEmployeeScreen(employee),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +41,10 @@ class EmployeeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _goToEditEmployee(context),
+        child: Icon(Icons.edit),
       ),
     );
   }
