@@ -56,11 +56,14 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: employees.length,
-              itemBuilder: (BuildContext context, int index) {
-                return EmployeeCard(employee: employees[index]);
-              },
+          : RefreshIndicator(
+              onRefresh: _loadEmployees,
+              child: ListView.builder(
+                itemCount: employees.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return EmployeeCard(employee: employees[index]);
+                },
+              ),
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToNewEmployee(context),
