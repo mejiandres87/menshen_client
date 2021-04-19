@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menshen_client/models/employee.dart';
 import 'package:menshen_client/screens/employee_screen.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class EmployeeCard extends StatelessWidget {
   final Employee employee;
