@@ -51,12 +51,11 @@ class _ScannerScreenState extends State<ScannerScreen> {
         _timestamp = DateTime.now().toIso8601String();
       });
       var registry = Registry(
-        employee: _id,
-        location: widget.location.id,
-        inTime: DateTime.now(),
-      );
-      var url = Uri.https(
-          'menshen-firebase-default-rtdb.firebaseio.com', 'registries.json');
+          location: widget.location.id,
+          inTime: DateTime.now(),
+          locationName: widget.location.name);
+      var url = Uri.https('menshen-firebase-default-rtdb.firebaseio.com',
+          '/employees/$_id/registries.json');
       http.post(url, body: json.encode(registry));
     }
   }

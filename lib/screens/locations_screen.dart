@@ -11,7 +11,7 @@ class LocationsScreen extends StatefulWidget {
 }
 
 class _LocationsScreenState extends State<LocationsScreen> {
-  List<Location> locations = [];
+  var locations = <Location>[];
   bool isLoading = false;
 
   @override
@@ -24,16 +24,18 @@ class _LocationsScreenState extends State<LocationsScreen> {
     setState(() {
       isLoading = true;
     });
-    List<Location> locationList = [];
+    var locationList = <Location>[];
     var url = Uri.https(
         'menshen-firebase-default-rtdb.firebaseio.com', 'locations.json');
     var response = await http.get(url);
     var parsedLocations = json.decode(response.body) as Map<String, dynamic>;
-    parsedLocations.forEach((key, value) {
-      var l = Location.fromJson(value);
-      l = l.copyWith(id: key);
-      locationList.add(l);
-    });
+    if (parsedLocations != null) {
+      parsedLocations.forEach((key, value) {
+        var l = Location.fromJson(value);
+        l = l.copyWith(id: key);
+        locationList.add(l);
+      });
+    }
     setState(() {
       isLoading = false;
       locations = locationList;
@@ -55,12 +57,16 @@ class _LocationsScreenState extends State<LocationsScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemCount: locations.length,
-              itemBuilder: (BuildContext context, int index) {
-                return LocationCard(location: locations[index]);
-              },
-            ),
+          : locations.isNotEmpty
+              ? ListView.builder(
+                  itemCount: locations.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return LocationCard(location: locations[index]);
+                  },
+                )
+              : Center(
+                  child: const Text("No hay Salas"),
+                ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToNewLocation(context),
         child: Icon(Icons.add),

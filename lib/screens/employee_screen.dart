@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menshen_client/models/employee.dart';
+import 'package:menshen_client/screens/employee_log_screen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'edit_employee_screen.dart';
@@ -17,11 +18,25 @@ class EmployeeScreen extends StatelessWidget {
     );
   }
 
+  void _goToEmployeeLogScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => EmployeeLogScreen(employee),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalles'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.meeting_room),
+            onPressed: () => _goToEmployeeLogScreen(context),
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -6,7 +6,7 @@ import 'package:menshen_client/screens/employee_screen.dart';
 class EmployeeCard extends StatelessWidget {
   final Employee employee;
 
-  EmployeeCard({@required this.employee});
+  EmployeeCard(this.employee);
 
   void _navigateToEmployeescreen(BuildContext context) {
     Navigator.of(context).push(

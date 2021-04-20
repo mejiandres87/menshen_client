@@ -61,7 +61,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               child: ListView.builder(
                 itemCount: employees.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return EmployeeCard(employee: employees[index]);
+                  return EmployeeCard(employees[index]);
                 },
               ),
             ),
