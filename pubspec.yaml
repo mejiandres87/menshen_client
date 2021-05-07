@@ -31,6 +31,8 @@ dependencies:
   qrscan: ^0.2.22
   http: ^0.13.0
   qr_flutter: ^4.0.0
+  flutter_bloc: ^7.0.0
+  equatable: ^2.0.0
 
 dev_dependencies:
   flutter_test:

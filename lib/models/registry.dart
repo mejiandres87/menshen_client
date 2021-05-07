@@ -3,8 +3,14 @@ class Registry {
   final String location;
   final String locationName;
   final DateTime inTime;
+  String employeeName;
 
-  Registry({this.id, this.inTime, this.location, this.locationName});
+  Registry(
+      {this.id,
+      this.inTime,
+      this.location,
+      this.locationName,
+      this.employeeName});
 
   Registry.fromJson(Map<String, dynamic> json)
       : this.id = json['id'],
@@ -20,16 +26,18 @@ class Registry {
         'in_time': this.inTime.toIso8601String()
       };
 
-  Registry coptWith(
-      {String id,
-      String employee,
-      String location,
-      DateTime inTime,
-      String locationName}) {
+  Registry coptWith({
+    String id,
+    String employeeName,
+    String location,
+    DateTime inTime,
+    String locationName,
+  }) {
     return Registry(
         id: id ?? this.id,
         locationName: locationName ?? this.locationName,
         location: location ?? this.location,
-        inTime: inTime ?? this.inTime);
+        inTime: inTime ?? this.inTime,
+        employeeName: employeeName ?? this.employeeName);
   }
 }

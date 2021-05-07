@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menshen_client/screens/employees_screen.dart';
 import 'package:menshen_client/screens/locations_screen.dart';
+import 'package:menshen_client/screens/registries_screen.dart';
 import 'package:menshen_client/widgets/menu_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,6 +31,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _goToRegistries(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RegistriesScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
               MenuItem(
                   navigateHandler: () => _goToLocations(context),
                   icon: Icons.meeting_room,
-                  title: 'Salas')
+                  title: 'Salas'),
+              MenuItem(
+                  navigateHandler: () => _goToRegistries(context),
+                  icon: Icons.login,
+                  title: 'Registro de entrada / salida'),
             ],
           ),
         ),
