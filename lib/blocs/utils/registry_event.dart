@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:menshen_client/models/employee.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -29,13 +30,13 @@ class RegistryFilterTimeRange extends RegistryEvent {
 }
 
 class RegistryFilterEmployee extends RegistryEvent {
-  final String employeeId;
+  final Employee employee;
 
-  RegistryFilterEmployee({@required this.employeeId}) : super([employeeId]);
+  RegistryFilterEmployee({@required this.employee}) : super([employee]);
 
   @override
   String toString() {
-    return 'RegistryFilterEmployee {employeeId : $employeeId }';
+    return 'RegistryFilterEmployee {employee : $employee }';
   }
 }
 

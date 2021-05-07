@@ -1,9 +1,11 @@
-class Registry {
+import 'package:equatable/equatable.dart';
+
+class Registry extends Equatable {
   final String id;
   final String location;
   final String locationName;
   final DateTime inTime;
-  String employeeName;
+  final String employeeName;
 
   Registry(
       {this.id,
@@ -17,7 +19,11 @@ class Registry {
         this.locationName = json['location_name'],
         this.inTime =
             json['in_time'] == null ? null : DateTime.parse(json['in_time']),
-        this.location = json['location'];
+        this.location = json['location'],
+        this.employeeName = json['employee_name'];
+
+  @override
+  List<Object> get props => [id, location, inTime, employeeName];
 
   Map<String, dynamic> toJson() => {
         'id': this.id,

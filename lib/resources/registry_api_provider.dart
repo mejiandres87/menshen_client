@@ -15,7 +15,7 @@ class RegistryApiProvider {
     if (parsedRegistries != null) {
       parsedRegistries.forEach((key, value) {
         var r = Registry.fromJson(value);
-        r = r.coptWith(id: key);
+        r = r.coptWith(id: key, employeeName: employee.fullname);
         registryList.add(r);
       });
     }
@@ -39,7 +39,7 @@ class RegistryApiProvider {
     if (parsedRegistries != null) {
       parsedRegistries.forEach((key, value) {
         var r = Registry.fromJson(value);
-        r = r.coptWith(id: key);
+        r = r.coptWith(id: key, employeeName: employee.fullname);
         registryList.add(r);
       });
     }

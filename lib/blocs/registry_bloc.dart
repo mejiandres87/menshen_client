@@ -17,7 +17,6 @@ class RegistryBloc extends Bloc<RegistryEvent, RegistryState> {
   Stream<RegistryState> mapEventToState(RegistryEvent event) async* {
     if (event is RegistryLoad) {
       yield RegistryInitializing();
-      var state = RegistryLoading();
       var employees = await _repository.fetchEmployees();
       if (employees != null) {
         var registries = <Registry>[];
@@ -25,8 +24,8 @@ class RegistryBloc extends Bloc<RegistryEvent, RegistryState> {
           Registry r = await _repository.fetchLastEmployeeRegistry(e);
           if (r != null) {
             registries.add(r);
-            state = state.copyWith(registries: registries);
-            yield state;
+            var newState = RegistryLoading(registries: [...registries]);
+            yield newState;
           }
         }
         yield RegistryLoaded(registries: registries);
@@ -67,6 +66,38 @@ class RegistryBloc extends Bloc<RegistryEvent, RegistryState> {
       }
       if (state is RegistryInitializing) {
         yield RegistryLoaded(registries: const []);
+      }
+    }
+    if (event is RegistryFilterTimeRange) {
+      yield RegistryInitializing();
+      var employees = await _repository.fetchEmployees();
+      if (employees != null) {
+        if (employees != null) {
+          var filteredRegistries = <Registry>[];
+          for (Employee e in employees) {
+            List<Registry> r = await _repository
+                .fetchRegistriesForEmployeeWithinTimeRange(e, event.range);
+            if (r != null) {
+              filteredRegistries.addAll(r);
+              var newState =
+                  RegistryLoading(registries: [...filteredRegistries]);
+              yield newState;
+            }
+          }
+          yield RegistryLoaded(registries: filteredRegistries);
+        }
+      } else {
+        yield RegistryError();
+      }
+    }
+    if (event is RegistryFilterEmployee) {
+      yield RegistryInitializing();
+      var registries = <Registry>[];
+      registries = await _repository.fetchRegistriesForEmployee(event.employee);
+      if (registries != null) {
+        yield RegistryLoaded(registries: registries);
+      } else {
+        yield RegistryError();
       }
     }
   }

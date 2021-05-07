@@ -40,6 +40,9 @@ class RegistryLoading extends RegistryState {
   }
 
   @override
+  List<Object> get props => [registries.length];
+
+  @override
   String toString() {
     return 'RegistryLoading { registries: ${registries?.length} }';
   }
