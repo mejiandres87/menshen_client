@@ -15,6 +15,8 @@ class RegistriesScreen extends StatefulWidget {
 
 class _RegistriesScreenState extends State<RegistriesScreen> {
   RegistryBloc _bloc;
+  TextEditingController _controller = TextEditingController();
+  String _searchResult = '';
 
   @override
   void initState() {
@@ -89,11 +91,41 @@ class _RegistriesScreenState extends State<RegistriesScreen> {
   }
 
   Widget buildTable(List<Registry> registries, bool isFinished) {
+    List<Registry> _filteredRegistries = registries;
     return registries.isNotEmpty
         ? SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Card(
+                  child: ListTile(
+                    leading: Icon(Icons.search),
+                    title: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Buscar',
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _searchResult = value;
+                          _filteredRegistries = registries.where((element) {
+                            return element.employeeName.contains(_searchResult);
+                          }).toList();
+                        });
+                      },
+                    ),
+                    trailing: IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          setState(() {
+                            _controller.clear();
+                            _searchResult = '';
+                            _filteredRegistries = registries;
+                          });
+                        }),
+                  ),
+                ),
                 !isFinished ? LinearProgressIndicator() : Container(),
                 DataTable(
                   columns: const <DataColumn>[
@@ -116,7 +148,13 @@ class _RegistriesScreenState extends State<RegistriesScreen> {
                       ),
                     ),
                   ],
-                  rows: buildDataCells(registries),
+                  rows: buildDataCells(_filteredRegistries
+                      .where((element) =>
+                          element.employeeName.contains(_searchResult) ||
+                          element.inTime
+                              .toIso8601String()
+                              .contains(_searchResult))
+                      .toList()),
                 )
               ],
             ),
